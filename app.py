@@ -13,7 +13,7 @@ BOT_NAME = "Techpaddi"
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Initialize Gemini model
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("models/gemini-pro")
 
 # Set Streamlit page config
 st.set_page_config(
@@ -41,36 +41,35 @@ with st.expander("💬 About Techpaddi"):
     I’m always here to help. Just type your question below 👇
     """)
 
-# Initialize session chat if not already created
+# Initialize chat session
 if "chat" not in st.session_state:
     st.session_state.chat = model.start_chat(history=[])
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display previous messages
+# Display chat history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Input box for new user message
-if prompt := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or career help..."):
-    # Show user message
+# Handle user input
+if user_input := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or career help..."):
+    # Display user's message
     with st.chat_message("user"):
-        st.markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
+        st.markdown(user_input)
+    st.session_state.messages.append({"role": "user", "content": user_input})
 
     # Generate Gemini response
     with st.chat_message("assistant"):
         with st.spinner("Techpaddi is thinking..."):
             try:
-                # Add context to the message
-                full_prompt = f"You are {BOT_NAME}, a friendly and smart AI that helps beginners explore tech careers and learn useful resources.\n\nUser: {prompt}\n{BOT_NAME}:"
+                full_prompt = f"You are {BOT_NAME}, an AI assistant that answers open-ended questions in a helpful and friendly tone.\n\nUser: {user_input}\n{BOT_NAME}:"
                 response = st.session_state.chat.send_message(full_prompt)
                 reply = response.text.strip()
             except Exception as e:
                 reply = "⚠️ Sorry, I encountered an error. Please try again."
-                print("Gemini Error:", e)
+                st.error(f"Gemini Error: {e}")
 
             st.markdown(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
