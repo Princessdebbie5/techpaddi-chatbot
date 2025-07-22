@@ -17,31 +17,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# Sidebar
-st.sidebar.title("🧠 Techpaddi Assistant")
-theme = st.sidebar.radio("Theme", ["🌞 Light", "🌙 Dark"], index=0)
-
-
-# Apply theme colors
-if theme == "🌙 Dark":
-    st.markdown("""
-        <style>
-            body {
-                background-color: #1e1e1e;
-                color: #f1f1f1;
-            }
-            .user-bubble { background-color: #2e8b57; color: white; }
-            .assistant-bubble { background-color: #444; color: white; }
-        </style>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-        <style>
-            .user-bubble { background-color: #d1e7dd; color: black; }
-            .assistant-bubble { background-color: #f8d7da; color: black; }
-        </style>
-    """, unsafe_allow_html=True)
-
 # Title
 st.markdown(f"<h1 style='text-align: center;'>🤖 {BOT_NAME} - Your AI Career Buddy</h1>", unsafe_allow_html=True)
 st.markdown(f"<p style='text-align: center;'>Welcome to <b>{BOT_NAME}</b>, your AI guide to all things tech, careers, and digital growth.</p>", unsafe_allow_html=True)
