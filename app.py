@@ -21,10 +21,11 @@ st.set_page_config(
     page_icon="🤖",
     layout="centered",
     initial_sidebar_state="auto"
-
 )
-    st.markdown("""
-    <style>
+
+# Custom light/dark bubble styling
+st.markdown("""
+<style>
     .user-bubble {
         background-color: #d1e7dd;
         color: #000;
@@ -43,8 +44,8 @@ st.set_page_config(
         max-width: 80%;
         align-self: flex-start;
     }
-    </style>
-""", unsafe_allow_html=True) 
+</style>
+""", unsafe_allow_html=True)
 
 # App title and header
 st.title(f"🤖 {BOT_NAME} - Your AI Career Buddy")
@@ -72,16 +73,16 @@ if "chat" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display chat history
+# Display chat history with role-based bubble styling
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        st.markdown(f'<div class="{message["role"]}-bubble">{message["content"]}</div>', unsafe_allow_html=True)
 
 # Handle user input
 if user_input := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or career help..."):
-    # Display user's message
+    # Display user message
     with st.chat_message("user"):
-        st.markdown(user_input)
+        st.markdown(f'<div class="user-bubble">{user_input}</div>', unsafe_allow_html=True)
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     # Generate Gemini response
@@ -95,6 +96,6 @@ if user_input := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or
                 reply = "⚠️ Sorry, I encountered an error. Please try again."
                 st.error(f"Gemini Error: {e}")
 
-            st.markdown(reply)
+            st.markdown(f'<div class="assistant-bubble">{reply}</div>', unsafe_allow_html=True)
             st.session_state.messages.append({"role": "assistant", "content": reply})
 
