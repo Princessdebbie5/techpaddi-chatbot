@@ -26,7 +26,7 @@ st.markdown("Welcome to **Techpaddi**, your AI guide to all things tech, careers
 # About section (collapsible)
 with st.expander("💬 About Techpaddi"):
     st.markdown("""
-    **Techpaddi** is your AI-powered assistant designed to help with **anything tech-related** — and more.
+    **Techpaddi** is your AI-powered assistant designed to help with **anything tech-related** and more.
 
     Ask me things like:
     - *"How do I switch to tech from a non-tech background?"*
@@ -62,9 +62,7 @@ if prompt := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or car
                     f"You are Techpaddi, an AI assistant that answers open-ended questions in a helpful and friendly tone.\n\nUser: {prompt}\nTechpaddi:"
                 )
                 reply = response.text
-            except Exception as e:
-                reply = "⚠️ Sorry, I encountered an error. Please try again."
-                print("Error:", e)
+            
 
             st.markdown(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
