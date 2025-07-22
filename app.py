@@ -20,7 +20,31 @@ st.set_page_config(
     page_title=f"{BOT_NAME} Chatbot",
     page_icon="🤖",
     layout="centered"
+    initial_sidebar_state="auto"
+
 )
+    st.markdown("""
+    <style>
+    .user-bubble {
+        background-color: #d1e7dd;
+        color: #000;
+        padding: 10px 15px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+        max-width: 80%;
+        align-self: flex-end;
+    }
+    .assistant-bubble {
+        background-color: #f8d7da;
+        color: #000;
+        padding: 10px 15px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+        max-width: 80%;
+        align-self: flex-start;
+    }
+    </style>
+""", unsafe_allow_html=True) 
 
 # App title and header
 st.title(f"🤖 {BOT_NAME} - Your AI Career Buddy")
@@ -73,5 +97,4 @@ if user_input := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or
 
             st.markdown(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
-
 
