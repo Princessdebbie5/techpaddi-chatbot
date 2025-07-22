@@ -23,7 +23,7 @@ st.set_page_config(
 )
 
 # App title and header
-st.title(f"🤖 {Techpaddi} - Your AI Career Buddy")
+st.title(f"🤖 {BOT_NAME} - Your AI Career Buddy")
 st.markdown(f"Welcome to **{BOT_NAME}**, your AI guide to all things tech, careers, and digital growth.")
 
 # Collapsible about section
