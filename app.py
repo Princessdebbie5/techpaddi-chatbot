@@ -21,14 +21,6 @@ st.set_page_config(
 st.sidebar.title("🧠 Techpaddi Assistant")
 theme = st.sidebar.radio("Theme", ["🌞 Light", "🌙 Dark"], index=0)
 
-with st.sidebar.expander("📢 What can I do?"):
-    st.markdown("""
-    - Career advice in tech
-    - Recommend tools & courses
-    - Answer tech questions
-    - Social media strategy help
-    - Simplify complex topics
-    """)
 
 # Apply theme colors
 if theme == "🌙 Dark":
