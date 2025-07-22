@@ -13,7 +13,7 @@ BOT_NAME = "Techpaddi"
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Initialize Gemini model
-model = genai.GenerativeModel("models/gemini-pro")
+model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
 
 # Set Streamlit page config
 st.set_page_config(
