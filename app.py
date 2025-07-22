@@ -6,27 +6,30 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Configure Gemini API key
+# Set bot name
+BOT_NAME = "Techpaddi"
+
+# Configure Gemini API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Initialize Gemini model
 model = genai.GenerativeModel("gemini-pro")
 
-# Page settings
+# Set Streamlit page config
 st.set_page_config(
-    page_title="Techpaddi Chatbot",
+    page_title=f"{BOT_NAME} Chatbot",
     page_icon="🤖",
     layout="centered"
 )
 
-# App title and intro
-st.title("🤖 Techpaddi - Your AI Career Buddy")
-st.markdown("Welcome to **Techpaddi**, your AI guide to all things tech, careers, and digital growth.")
+# App title and header
+st.title(f"🤖 {Techpaddi} - Your AI Career Buddy")
+st.markdown(f"Welcome to **{BOT_NAME}**, your AI guide to all things tech, careers, and digital growth.")
 
-# About section (collapsible)
+# Collapsible about section
 with st.expander("💬 About Techpaddi"):
-    st.markdown("""
-    **Techpaddi** is your AI-powered assistant designed to help with **anything tech-related** and more.
+    st.markdown(f"""
+    **{BOT_NAME}** is your AI-powered assistant designed to help with **anything tech-related** — and more.
 
     Ask me things like:
     - *"How do I switch to tech from a non-tech background?"*
@@ -38,31 +41,38 @@ with st.expander("💬 About Techpaddi"):
     I’m always here to help. Just type your question below 👇
     """)
 
-# Initialize session state
+# Initialize session chat if not already created
+if "chat" not in st.session_state:
+    st.session_state.chat = model.start_chat(history=[])
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display chat history
+# Display previous messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Chat input
+# Input box for new user message
 if prompt := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or career help..."):
-    # Display user message
+    # Show user message
     with st.chat_message("user"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Gemini AI response
+    # Generate Gemini response
     with st.chat_message("assistant"):
         with st.spinner("Techpaddi is thinking..."):
             try:
-                response = model.generate_content(
-                    f"You are Techpaddi, an AI assistant that answers open-ended questions in a helpful and friendly tone.\n\nUser: {prompt}\nTechpaddi:"
-                )
-                reply = response.text
-    
+                # Add context to the message
+                full_prompt = f"You are {BOT_NAME}, a friendly and smart AI that helps beginners explore tech careers and learn useful resources.\n\nUser: {prompt}\n{BOT_NAME}:"
+                response = st.session_state.chat.send_message(full_prompt)
+                reply = response.text.strip()
+            except Exception as e:
+                reply = "⚠️ Sorry, I encountered an error. Please try again."
+                print("Gemini Error:", e)
+
             st.markdown(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
