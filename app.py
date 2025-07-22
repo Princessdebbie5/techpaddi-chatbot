@@ -62,8 +62,7 @@ if prompt := st.chat_input("Ask Techpaddi anything — tech, tools, tips, or car
                     f"You are Techpaddi, an AI assistant that answers open-ended questions in a helpful and friendly tone.\n\nUser: {prompt}\nTechpaddi:"
                 )
                 reply = response.text
-            
-
+    
             st.markdown(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
 
