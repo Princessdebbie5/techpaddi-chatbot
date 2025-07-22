@@ -19,7 +19,7 @@ model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
 st.set_page_config(
     page_title=f"{BOT_NAME} Chatbot",
     page_icon="🤖",
-    layout="centered"
+    layout="centered",
     initial_sidebar_state="auto"
 
 )
